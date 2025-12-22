@@ -1,9 +1,9 @@
-import {book_modeel} from "../models/book_modeel";
+import {Book} from "../models/book.js";
 
 export const addbook=async(req,res)=>{
     try
     {
-        const book=await book_modeel.create(req.body);
+        const book=await Book.create(req.body);
         res.json({message:"book added",book});
         
 
@@ -17,13 +17,13 @@ export const addbook=async(req,res)=>{
 
 export const getbooks=async(req,res)=>{
     try{
-        const book=await book_modeel.find()
+        const book=await Book.find()
         res.json(book);
 
     }
     catch(err)
     {
-        res.json({message:"cant add book",err});
+        res.json({message:"cant add book",error:err.message});
 
     }
 }
