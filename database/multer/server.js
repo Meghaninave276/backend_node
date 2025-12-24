@@ -60,6 +60,13 @@ app.post("/",upload.single("image"),async(req,res)=>{
 
 })
 
+app.get("/",async(req,res)=>{
+    const student=await Student.find();
+    res.json(student);
+
+
+})
+
 app.listen(7412,()=>{
     console.log("server started");
 })
