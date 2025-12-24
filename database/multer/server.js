@@ -1,3 +1,4 @@
+import { profile } from 'console'
 import express from 'express'
 import mongoose from 'mongoose'
 import multer from 'multer'
@@ -24,15 +25,16 @@ const studentschema= new mongoose.Schema({
     name:String,
     age:Number,
     course:String,
-   profile:String
+   image_path:String
 
 
 },{timestamps:true});
 
 
-const student=mongoose.model("students",studentschema);
+const Student = mongoose.model("students", studentschema);
 
-const storage=multer.storage({
+
+const storage=multer.diskStorage({
     destination:(req,file,cb)=>{
         cb(null,uploadpath);
 
@@ -44,3 +46,20 @@ const storage=multer.storage({
 })
 const upload=multer({storage});
 
+
+app.post("/",upload.single("image"),async(req,res)=>{
+    const student =  new Student({
+            name:"megha",
+            age:19,
+            course:"bca",
+            image_path:"http://localhost:7412"+"uploads"+req.file.filename
+        })
+        const result= await student.save();
+        res.json({msg:"student added",result})
+   
+
+})
+
+app.listen(7412,()=>{
+    console.log("server started");
+})
