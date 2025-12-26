@@ -1,3 +1,4 @@
+import { title } from "process";
 import { Movie } from "../models/movie.js";
 
 export const addmovie=async(req,res)=>{
@@ -29,3 +30,38 @@ export const getmovie=async(req,res)=>{
   res.json(movies);
 
 }
+
+export const getmoviebyId=async(req,res)=>{
+ try
+ {
+   const movie =  await Movie.findById(req.params.id);
+  res.json({message:"movie added",movie});
+
+ }
+ catch(err)
+ {
+  res.json({message:"movie not found",err});
+
+ }
+
+}
+
+export const searchMovie = async (req, res) => {
+  try
+
+  {
+    const { title } = req.query;
+
+  const movies = await Movie.find({
+    Movie_Title: { $regex: title, $options: "i" }
+  });
+
+  res.json(movies);
+
+  }
+  catch(err)
+  {
+
+    res.json({message:"movie not found",err});
+  }
+};
