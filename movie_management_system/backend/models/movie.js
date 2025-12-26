@@ -9,6 +9,6 @@ const movies=new mongoose.Schema({
        Movie_Poster:{type:String, required:true},
       
 
-})
+},{timestamps:true})
 
 export const Movie=mongoose.model("Movie",movies);
