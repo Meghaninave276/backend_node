@@ -3,8 +3,12 @@ import express from 'express'
 import mongoose from 'mongoose'
 import multer from 'multer'
 import path from "path"
+import fs from "fs"
+
+
 
 import {fileURLToPath} from 'url'
+import { Movie } from '../../movie_management_system/backend/models/movie'
 
 
 
@@ -64,6 +68,20 @@ app.get("/",async(req,res)=>{
     const student=await Student.find();
     res.json(student);
 
+
+})
+
+app.delete("/",async(req,res)=>{
+    try
+    {
+        const movie = await Movie.findById(req.params.id);
+        if(fs.existsSync())
+
+    }
+    catch(err)
+    {
+
+    }
 
 })
 

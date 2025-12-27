@@ -1,19 +1,11 @@
-import { title } from "process";
+
 import { Movie } from "../models/movie.js";
 
 export const addmovie=async(req,res)=>{
     try
     {
-        const newmovie= new Movie({
-              Movie_Title:"Inception",
-     Description:"A skilled thief enters people's dreams to steal secrets and plant ideas.",
-     Genre:"Science Fiction",
-    
-      Release_Year:2010,
-       Movie_Poster:"https://example.com/inception-poster.jpg"
-
-        });
-        const result = await newmovie.save()
+      const {Movie_Title,Description,Genre,Release_Year}=req.body
+      const result =  await Movie.create({Movie_Title,Description,Genre,Release_Year,Movie_Poster:"/uploads"+req.file.filename});
         res.json({message:"movie added",result});
     }
     catch(e)
@@ -26,9 +18,17 @@ export const addmovie=async(req,res)=>{
 }
 
 export const getmovie=async(req,res)=>{
-  const movies =  await Movie.find();
+ try
+ {
+   const movies =  await Movie.find();
   res.json(movies);
+ }
 
+ catch(err)
+ {
+   res.status(500).json({message:"movie not found",e});
+
+ }
 }
 
 export const getmoviebyId=async(req,res)=>{
