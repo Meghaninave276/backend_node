@@ -4,30 +4,35 @@ import viteLogo from '/vite.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  
+  const [title,setTitle]=useState("");
+  const [description,setDescription]=useState("");
+  const [genre,setGenre]=useState("");
+  const [year,setYear]=useState("");
+  const [file,setFile]=useState();
+  
 
   return (
     <>
+      
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <input type="text" value={title} onChange={(e)=>setTitle(e.target.value)}/>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div>
+        <input type="text" value={description} onChange={(e)=>setTitle(e.target.value)}/>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div>
+        <input type="text" value={genre} onChange={(e)=>setTitle(e.target.value)}/>
+      </div>
+      <div>
+        <input type="number" value={year} onChange={(e)=>setTitle(e.target.value)} />
+      </div>
+      <div>
+        <input type="file" value={file} onChange={(e)=>setTitle(e.target.value)}/>
+      </div>
+      <div>
+       <button>search</button>
+      </div>
     </>
   )
 }

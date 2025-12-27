@@ -27,3 +27,28 @@ export const getbooks=async(req,res)=>{
 
     }
 }
+
+export const updatebook=async(req,res)=>{
+ try
+ {
+     const result = await Book.findByIdAndUpdate(req.params.id,req.body,{new:true});
+  res.json({message:"book updated",result});
+ }
+ catch(err)
+ {
+    res.json({message:"book not updated",err});
+ }
+}
+
+export const deletebook=async(req,res)=>{
+   try
+   {
+     await Book.findByIdAndDelete(req.params.id);
+    res.json({ message: "book deleted" });
+   }
+   catch(err)
+   {
+    res.json({message:"book not deleted",err});
+   }
+
+}
