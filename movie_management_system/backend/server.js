@@ -11,11 +11,12 @@ app.use(cors());
 const __filename=fileURLToPath(import.meta.url);
 const __dirname=path.dirname(__filename);
 export const uploadpath=path.join(__dirname,"uploads");
+app.use("/uploads", express.static(uploadpath));
 
 connectdb();
 
 app.use("/movie",router);
-app.use("/uploads", express.static(uploadpath));
+
 
 
 app.listen(4563,()=>{
