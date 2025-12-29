@@ -1,4 +1,4 @@
-import { addmovie,getmovie } from "../controllers/moviecontrollers.js";
+import { addmovie,getmovie,deletemovie,updatemovie } from "../controllers/moviecontrollers.js";
 import express from 'express'
 import multer from 'multer'
 import path from "path"
@@ -24,6 +24,8 @@ const storage=multer.diskStorage({
 
  router.post("/",upload.single("Movie_Poster"),addmovie);
 router.get("/",getmovie);
+router.put("/:id",upload.single("Movie_Poster"),updatemovie);
+router.delete("/:id",deletemovie);
 // router.get("/:id",getmoviebyId);
 // router.get("/search",searchMovie);
 

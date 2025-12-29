@@ -91,36 +91,38 @@ app.delete("/:id",async(req,res)=>{
     }
 
 })
-app.put("/:id", upload.single("image"), async (req, res) => {
-    try {
-        const student = await Student.findById(req.params.id);
+export const updatemovie = async (req, res) => {
+  try {
+    const movie = await Movie.findById(req.params.id);
 
-        if (!student) {
-            return res.status(404).json({ message: "Student not found" });
-        }
-
-        if (req.file) {
-            const deletePath = path.join(__dirname, student.image_path);
-
-            if (fs.existsSync(deletePath)) {
-                fs.unlinkSync(deletePath);
-            }
-
-            student.image_path = "/uploads/" + req.file.filename;
-        }
-
-        student.name = req.body.name;
-        student.age = req.body.age;
-        student.course = req.body.course;
-
-        await student.save();
-
-        res.json({ message: "student updated", student });
-
-    } catch (err) {
-        res.status(500).json({ message: "student not updated", err });
+    if (!movie) {
+      return res.status(404).json({ message: "Movie not found" });
     }
-});
+
+
+    if (req.file) {
+      const deletePath = path.join(__dirname, "..", movie.Movie_Poster);
+
+      if (fs.existsSync(deletePath)) {
+        fs.unlinkSync(deletePath);
+      }
+
+      movie.Movie_Poster = "/uploads/" + req.file.filename;
+    }
+
+    movie.Movie_Title = req.body.Movie_Title;
+    movie.Description = req.body.Description;
+    movie.Genre = req.body.Genre;
+    movie.Release_Year = req.body.Release_Year;
+
+    await movie.save();
+
+    res.json({ message: "movie updated", movie });
+
+  } catch (err) {
+    res.status(500).json({ message: "movie not updated", err });
+  }
+};
 
 
 app.listen(7412,()=>{
