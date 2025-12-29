@@ -8,7 +8,7 @@ import fs from "fs"
 
 
 import {fileURLToPath} from 'url'
-import { Movie } from '../../movie_management_system/backend/models/movie'
+
 
 
 
@@ -53,9 +53,9 @@ const upload=multer({storage});
 
 app.post("/",upload.single("image"),async(req,res)=>{
     const student =  new Student({
-            name:"megha",
-            age:19,
-            course:"bca",
+            name:req.body.name,
+            age:req.body.age,
+            course:req.body.course,
             image_path:"http://localhost:7412"+"uploads"+req.file.filename
         })
         const result= await student.save();
@@ -71,19 +71,57 @@ app.get("/",async(req,res)=>{
 
 })
 
-app.delete("/",async(req,res)=>{
+app.delete("/:id",async(req,res)=>{
     try
     {
-        const movie = await Movie.findById(req.params.id);
-        if(fs.existsSync())
+        const student = await Student.findById(req.params.id);
+        const deletepath=path.join(__dirname,student.image_path)
+        if(fs.existsSync(deletepath))
+            {
+                fs.unlinkSync(deletepath);
+
+            } 
+            await Student.findByIdAndDelete(req.params.id);
+            res.json({ message: "student deleted" });
 
     }
     catch(err)
     {
-
+        res.status(500).json({message:"student not deleted",err});
     }
 
 })
+app.put("/:id", upload.single("image"), async (req, res) => {
+    try {
+        const student = await Student.findById(req.params.id);
+
+        if (!student) {
+            return res.status(404).json({ message: "Student not found" });
+        }
+
+        if (req.file) {
+            const deletePath = path.join(__dirname, student.image_path);
+
+            if (fs.existsSync(deletePath)) {
+                fs.unlinkSync(deletePath);
+            }
+
+            student.image_path = "/uploads/" + req.file.filename;
+        }
+
+        student.name = req.body.name;
+        student.age = req.body.age;
+        student.course = req.body.course;
+
+        await student.save();
+
+        res.json({ message: "student updated", student });
+
+    } catch (err) {
+        res.status(500).json({ message: "student not updated", err });
+    }
+});
+
 
 app.listen(7412,()=>{
     console.log("server started");
