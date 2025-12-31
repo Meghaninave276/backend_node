@@ -31,6 +31,12 @@ function Home() {
 
     alert("movie added");
     handleget();
+     setTitle("");
+    setDescription("");
+    setGenre("");
+    setYear("");
+    setFiles(null);
+  
 
   } catch (err) {
     console.log("movie not added", err);
@@ -115,7 +121,7 @@ const handleupdate = async () => {
             <div className="movie-card" key={m._id}>
     <img src={`http://localhost:4563${m.Movie_Poster}`}  />
  <div className='movie-content'>
-     <h3>{m.Movie_Title}</h3>
+     <h2 className='fw-bold'>{m.Movie_Title}</h2>
     <p>{m.Description}</p>
     <span>{m.Genre}</span>
     <small>{m.Release_Year}</small>
