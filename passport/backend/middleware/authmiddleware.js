@@ -1,5 +1,5 @@
-export const isauthenticated=(req,res,next)=>{
-    if(req.isauthenticated())
+export const isAuthenticated=(req,res,next)=>{
+    if(req.isAuthenticated())
     {
         return next();
 
