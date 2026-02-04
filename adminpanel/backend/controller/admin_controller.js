@@ -1,0 +1,68 @@
+
+import { usercollection } from "../model/user_model.js"
+import jwt from 'jsonwebtoken'
+import dotenv from 'dotenv'
+import { status } from "init";
+dotenv.config();
+
+
+// export const adduser=async(req,res)=>{
+   
+//     try
+//     {
+//         await usercollection.create(req.body);
+//         return res.json({status:true,message:"user added successfully"});
+//     }
+//     catch(err)
+//     {
+//         return res.json({status:false,message:err.message});
+
+//     }
+
+
+// }
+
+export const getuser=async(req,res)=>{
+    try
+    {
+       const users= await usercollection.find();
+        return res.json({status:true,message:"user fetched successfully",users});
+
+    }
+    catch(err)
+    {
+        return res.json({status:false,message:err.message})
+
+    }
+
+}
+export const updateuser=async(req,res)=>{
+    const {email}=req.body
+    try
+    {
+        await usercollection.findOneAndUpdate({email},{$set:req.body});
+         return res.json({status:true,message:"user updated successfully"});
+
+    }
+    catch(err)
+    {
+         return res.json({status:false,message:err.message});
+
+    }
+
+}
+
+export const getcurrentuser=async(req,res)=>{
+  try
+  {
+    const token = req.cookies.auth_token;
+    console.log(token)
+ const decoded =  jwt.verify(token,process.env.SECRET_KEY)
+ console.log(decoded._doc);
+ return res.json({status:true,message:"user fetched successfully",user:decoded._doc});
+  }
+  catch(err)
+  {
+    return res.json({status:false,message:err.message})
+  }
+}
